@@ -1,23 +1,72 @@
-import logo from './logo.svg';
-import './App.css';
+import  { useEffect, useState } from 'react'
+import axios from 'axios'
 
 function App() {
+  const [pokemonList, setPokemonList] = useState([])
+
+  let baseURL = 'https://pokeapi.co/api/v2/'
+
+  const getData = async (query) => {
+    const res = await axios.get(`${baseURL}pokemon/${query}`)
+    const  { id, name, sprites } = res.data
+    const pokemonData = {
+      id,
+      name,
+      sprites
+    }
+    return pokemonData
+  }
+
+  const genaratePokemonCollection = async () => {
+    let pokemonCollection = []
+    let pokemonFormattedCollection = []
+
+    for (let i = 1; i <= 30; i++) {
+      let response = await getData(i)
+      pokemonCollection.push(response)
+    }
+
+    pokemonFormattedCollection = pokemonCollection.map(item => {
+      return(
+        <tr>
+          <td>
+            <img src= {item.sprites.front_default} />
+           
+          </td>
+          <td>
+            {item.id}
+          </td>
+          <td>
+            {item.name}
+          </td>
+        </tr>
+      )
+    })
+    setPokemonList(pokemonFormattedCollection)
+  }
+
+
+
+  useEffect(() => {
+    genaratePokemonCollection()
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <table>
+        <tr>
+          <th>
+            picture
+          </th>
+          <th>
+            id number
+          </th>
+          <th>
+            name
+          </th>
+        </tr>
+        {pokemonList}
+      </table>
     </div>
   );
 }
