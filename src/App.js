@@ -1,5 +1,6 @@
-import  { useEffect, useState } from 'react'
+import  { useEffect, useState, useCallback } from 'react'
 import axios from 'axios'
+import './app.css'
 
 function App() {
   const [page, setPage] = useState({start: 1, end: 10})
@@ -8,7 +9,7 @@ function App() {
 
   let baseURL = 'https://pokeapi.co/api/v2/'
 
-  const getData = async (query) => {
+  const getData = useCallback(async (query) => {
     const res = await axios.get(`${baseURL}pokemon/${query}`)
     const  { id, name, sprites } = res.data
     const pokemonData = {
@@ -17,13 +18,13 @@ function App() {
       sprites
     }
     return pokemonData
-  }
+  }, [baseURL])
 
-  const genaratePokemonCollection = async () => {
+  const genaratePokemonCollection = useCallback(async () => {
     let pokemonCollection = []
     let pokemonFormattedCollection = []
 
-    for (let i = page.start; i <= page.end; i++) {
+    for (let i = 1; i <= 10; i++) {
       let response = await getData(i)
       pokemonCollection.push(response)
     }
@@ -45,46 +46,62 @@ function App() {
     })
     setPokemonList(pokemonFormattedCollection)
     setLoading(false)
-  }
+  }, [getData])
 
   const nextPageHandler = () => {
     const newPage = {
       start: page.start + 10,
       end: page.end + 10
     }
-    setLoading(true)
+    
     setPage(newPage)
+  }
+
+  const prevPageHandler = () => {
+    const newPage = {
+      start: page.start - 10,
+      end: page.end - 10
+    }
+    
+    setPage(newPage)
+  }
+
+  const slicePokemonList = () => {
+    return pokemonList.slice(page.start -1, page.end)
   }
 
   useEffect(() => {
     genaratePokemonCollection()
-  }, [page])
+  })
 
   return (
-    <div>
+    <div className='app'>
       {loading && <h1>loading . . . </h1>}
       {!loading && 
         <>
-          <button onClick={nextPageHandler}>next</button>
           <table>
             <thead>
               <tr>
                 <th>
-                  picture
+                  Picture
                 </th>
                 <th>
-                  id number
+                  Id number
                 </th>
                 <th>
-                  name
+                  Name
                 </th>
               </tr>
             </thead>
             
             <tbody>
-              {pokemonList}
+              {slicePokemonList()}
             </tbody>
           </table>
+          <div className='mobile-button-group'>
+            <div disabled={page.start === 1} onClick={prevPageHandler} className='button-primary'>PREV</div>
+            <div disabled={page.end === 30} onClick={nextPageHandler} className='button-primary'>NEXT</div>
+          </div>
         </>
       }
     </div>
