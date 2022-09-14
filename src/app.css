@@ -61,6 +61,11 @@ tbody>tr:hover{
 .button-primary:hover{
     background-color: rgba(255, 255, 255, 0.5);
 }
+.button-primary:disabled{
+    background-color: rgba(255, 255, 255, 0.9);
+    color: black;
+    cursor: not-allowed;
+}
 
 /* Spinner Loader */
 

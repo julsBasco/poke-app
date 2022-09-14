@@ -104,8 +104,8 @@ function App() {
             </tbody>
           </table>
           <div className='mobile-button-group'>
-            <div disabled={page.start === 1} onClick={prevPageHandler} className='button-primary'>PREV</div>
-            <div disabled={page.end === 30} onClick={nextPageHandler} className='button-primary'>NEXT</div>
+            <option disabled={page.start === 1} onClick={prevPageHandler} className='button-primary'>PREV</option>
+            <option disabled={page.end === 30} onClick={nextPageHandler} className='button-primary'>NEXT</option>
           </div>
         </>
       }
