@@ -76,13 +76,13 @@ function App() {
 
   return (
     <div className='app'>
-      {true && <div className='loader'>
+      {loading && <div className='loader'>
           <div class="loadingio-spinner-spinner-f4luciuyvbi"><div class="ldio-j5wtyjca40m">
           <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
           </div></div>
         </div>
       }
-      {!true && 
+      {!loading && 
         <>
           <table>
             <thead>
