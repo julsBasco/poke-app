@@ -17,8 +17,21 @@
     width: 100vw;
     height: 100vh;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    
+}
+
+.loader>h1 {
+    font-family: 'Pokemon Solid';
+    font-size: 100px;
+    color: white;
+    font-kerning: auto;
+}
+
+.loader>h3 {
+    color: white;
 }
 
 table {

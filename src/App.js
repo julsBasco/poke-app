@@ -24,7 +24,7 @@ function App() {
     let pokemonCollection = []
     let pokemonFormattedCollection = []
 
-    for (let i = 1; i <= 10; i++) {
+    for (let i = 1; i <= 30; i++) {
       let response = await getData(i)
       pokemonCollection.push(response)
     }
@@ -77,9 +77,11 @@ function App() {
   return (
     <div className='app'>
       {loading && <div className='loader'>
+          <h1>PokeDex</h1>
           <div class="loadingio-spinner-spinner-f4luciuyvbi"><div class="ldio-j5wtyjca40m">
           <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
           </div></div>
+          <h3>Please wait while we connect to the pokemon servers . . .</h3>
         </div>
       }
       {!loading && 
